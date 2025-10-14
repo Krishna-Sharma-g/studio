@@ -55,7 +55,7 @@ export function DashboardLayout({ children, navItems, userType }: DashboardLayou
           </SidebarMenu>
         </SidebarContent>
       </Sidebar>
-      <SidebarInset className="flex flex-col">
+      <SidebarInset className="flex flex-col bg-gradient-main">
         <header className="sticky top-0 z-10 flex h-14 items-center justify-between gap-4 border-b bg-background/80 px-4 backdrop-blur-sm sm:px-6">
           <SidebarTrigger variant="outline" className="sm:hidden" />
           <div className="flex-1">
