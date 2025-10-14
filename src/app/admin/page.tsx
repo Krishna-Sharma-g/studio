@@ -34,7 +34,6 @@ export default function AdminLogin() {
                 type="email"
                 placeholder="admin@mmbank.com"
                 required
-                defaultValue="admin.kumar@mmbank.com"
               />
             </div>
              <div className="grid gap-2">
