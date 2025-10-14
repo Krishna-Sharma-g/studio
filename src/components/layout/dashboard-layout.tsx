@@ -14,10 +14,8 @@ import {
   SidebarInset,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
 import Logo from "@/components/logo";
 import { UserNav } from "@/components/user-nav";
-import { cn } from "@/lib/utils";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -59,11 +57,7 @@ export function DashboardLayout({ children, navItems, userType }: DashboardLayou
       </Sidebar>
       <SidebarInset className="flex flex-col">
         <header className="sticky top-0 z-10 flex h-14 items-center justify-between gap-4 border-b bg-background/80 px-4 backdrop-blur-sm sm:px-6">
-          <SidebarTrigger asChild>
-            <Button size="icon" variant="outline" className="sm:hidden">
-              <span className="sr-only">Toggle Menu</span>
-            </Button>
-          </SidebarTrigger>
+          <SidebarTrigger variant="outline" className="sm:hidden" />
           <div className="flex-1">
              <h1 className="text-xl font-semibold font-headline capitalize">
                 {pathname.split('/').pop()?.replace('-', ' ')}
