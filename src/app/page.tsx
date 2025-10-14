@@ -48,7 +48,7 @@ export default function UserLogin() {
               </div>
               <Input id="password" type="password" required defaultValue="password123" />
             </div>
-            <Button type="submit" className="w-full" asChild>
+            <Button className="w-full" asChild>
               <Link href="/dashboard">Login</Link>
             </Button>
           </div>
