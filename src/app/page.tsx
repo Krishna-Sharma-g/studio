@@ -21,7 +21,7 @@ export default function UserLogin() {
           </div>
           <CardTitle className="text-2xl font-headline">Welcome Back</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your email and PIN to login to your account
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -38,18 +38,14 @@ export default function UserLogin() {
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="pin">4-Digit PIN</Label>
                 <Link
                   href="#"
                   className="ml-auto inline-block text-sm underline"
                 >
-                  Forgot your password?
+                  Forgot your PIN?
                 </Link>
               </div>
-              <Input id="password" type="password" required defaultValue="password123" />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="pin">4-Digit PIN</Label>
               <Input
                 id="pin"
                 type="password"
