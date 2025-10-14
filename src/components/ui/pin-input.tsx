@@ -33,8 +33,8 @@ export function PinInput({ length = 4, onComplete }: PinInputProps) {
       }
 
       // If all fields are filled, call onComplete
-      if (newPin.every(digit => digit !== '') && onComplete) {
-        onComplete(newPin.join(''));
+      if (newPin.every(digit => digit !== '')) {
+        onComplete?.(newPin.join(''));
       }
     }
   };
@@ -48,7 +48,19 @@ export function PinInput({ length = 4, onComplete }: PinInputProps) {
 
   if (!isClient) {
     // Render a placeholder or null on the server
-    return null;
+    return (
+        <div className="flex w-full justify-between gap-2 md:gap-4">
+            {Array(length).fill(0).map((_, index) => (
+                 <Input
+                    key={index}
+                    type="password"
+                    className="h-14 w-full text-center text-2xl font-bold"
+                    aria-label={`PIN digit ${index + 1}`}
+                    disabled
+                />
+            ))}
+        </div>
+    );
   }
 
   return (
@@ -57,7 +69,8 @@ export function PinInput({ length = 4, onComplete }: PinInputProps) {
         <Input
           key={index}
           ref={el => (inputRefs.current[index] = el)}
-          type="tel" // Use "tel" to bring up numeric keyboard on mobile
+          type="password"
+          inputMode="numeric"
           maxLength={1}
           value={digit}
           onChange={e => handleChange(e, index)}
