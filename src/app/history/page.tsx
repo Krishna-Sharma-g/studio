@@ -105,7 +105,9 @@ export default function HistoryPage() {
           </div>
           <Pagination className="mt-6">
             <PaginationContent>
-              <PaginationPrevious href="#" />
+              <PaginationItem>
+                <PaginationPrevious href="#" />
+              </PaginationItem>
               <PaginationItem>
                 <PaginationLink href="#" isActive>1</PaginationLink>
               </PaginationItem>
@@ -115,7 +117,9 @@ export default function HistoryPage() {
               <PaginationItem>
                 <PaginationEllipsis />
               </PaginationItem>
-              <PaginationNext href="#" />
+              <PaginationItem>
+                <PaginationNext href="#" />
+              </PaginationItem>
             </PaginationContent>
           </Pagination>
         </CardContent>

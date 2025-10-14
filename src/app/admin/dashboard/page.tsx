@@ -121,8 +121,12 @@ export default function AdminDashboardPage() {
           </div>
           <Pagination className="mt-6">
             <PaginationContent>
-              <PaginationPrevious href="#" />
-              <PaginationNext href="#" />
+              <PaginationItem>
+                <PaginationPrevious href="#" />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext href="#" />
+              </PaginationItem>
             </PaginationContent>
           </Pagination>
         </CardContent>
