@@ -44,16 +44,16 @@ export default function ProfilePage() {
                   </div>
                    <div className="space-y-2">
                       <Label htmlFor="address">Address</Label>
-                      <Input id="address" defaultValue="123 Banking St, Finance City, 12345" />
+                      <Input id="address" defaultValue="123 Financial District, Mumbai, 400051" />
                     </div>
                   <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number</Label>
-                      <Input id="phone" defaultValue="+1 (555) 123-4567" />
+                      <Input id="phone" defaultValue="+91 98765 43210" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="dob">Date of Birth</Label>
-                      <Input id="dob" type="date" defaultValue="1990-05-15" />
+                      <Input id="dob" type="date" defaultValue="1992-08-15" />
                     </div>
                   </div>
                   <div className="flex justify-end">

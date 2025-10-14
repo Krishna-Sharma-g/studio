@@ -33,7 +33,7 @@ export default function UserLogin() {
                 type="email"
                 placeholder="m@example.com"
                 required
-                defaultValue="customer@mmbank.com"
+                defaultValue="priya.sharma@mmbank.com"
               />
             </div>
             <div className="grid gap-2">
