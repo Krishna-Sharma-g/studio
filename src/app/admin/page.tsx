@@ -40,7 +40,18 @@ export default function AdminLogin() {
               <Label htmlFor="password">Password</Label>
               <Input id="password" type="password" required defaultValue="adminpass" />
             </div>
-            <Button type="submit" className="w-full" asChild>
+             <div className="grid gap-2">
+              <Label htmlFor="pin">4-Digit PIN</Label>
+              <Input
+                id="pin"
+                type="password"
+                maxLength={4}
+                placeholder="****"
+                required
+                className="tracking-[1rem] text-center"
+              />
+            </div>
+            <Button className="w-full" asChild>
               <Link href="/admin/dashboard">Sign In</Link>
             </Button>
           </div>

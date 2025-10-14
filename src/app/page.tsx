@@ -48,6 +48,17 @@ export default function UserLogin() {
               </div>
               <Input id="password" type="password" required defaultValue="password123" />
             </div>
+            <div className="grid gap-2">
+              <Label htmlFor="pin">4-Digit PIN</Label>
+              <Input
+                id="pin"
+                type="password"
+                maxLength={4}
+                placeholder="****"
+                required
+                className="tracking-[1rem] text-center"
+              />
+            </div>
             <Button className="w-full" asChild>
               <Link href="/dashboard">Login</Link>
             </Button>
