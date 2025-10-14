@@ -3,19 +3,17 @@
 import * as React from "react";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import {
-  LayoutDashboard,
-  ArrowRightLeft as TransferIcon,
-  History,
-  User,
-  LifeBuoy,
+  Home,
+  Scan,
+  Gift,
+  User
 } from "lucide-react";
 
 const navItems = [
-  { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  { href: "/transfer", icon: TransferIcon, label: "Transfers" },
-  { href: "/history", icon: History, label: "History" },
+  { href: "/dashboard", icon: Home, label: "Home" },
+  { href: "#", icon: Scan, label: "Scan" },
+  { href: "#", icon: Gift, label: "Offers" },
   { href: "/profile", icon: User, label: "Profile" },
-  { href: "#", icon: LifeBuoy, label: "Help & Support" },
 ];
 
 export function UserDashboardLayout({ children }: { children: React.ReactNode }) {

@@ -1,10 +1,21 @@
-import {
-  ArrowRightLeft,
-  CircleDollarSign,
-  History,
-} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  ArrowUpRight,
+  Search,
+  Scan,
+  Contact,
+  Phone,
+  Landmark,
+  MoreHorizontal,
+  ChevronRight,
+  User as UserIcon,
+  Home,
+  Gift,
+} from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -12,136 +23,158 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
-import { accounts, transactions, user } from "@/lib/data";
-import { DebitCard } from "@/components/debit-card";
+import { user, people, bills } from "@/lib/data";
+
+const QuickAction = ({ icon, label }: { icon: React.ElementType, label: string }) => {
+  const Icon = icon;
+  return (
+    <div className="flex flex-col items-center gap-2 text-center">
+      <Button
+        variant="outline"
+        className="h-16 w-16 rounded-full bg-primary/10 text-primary hover:bg-primary/20"
+      >
+        <Icon className="h-7 w-7" />
+      </Button>
+      <span className="text-sm font-medium text-foreground">{label}</span>
+    </div>
+  );
+};
 
 export default function DashboardPage() {
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-    }).format(amount);
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("");
   };
 
   return (
     <UserDashboardLayout>
-      <div className="grid gap-8">
-        <div className="grid gap-8 md:grid-cols-2">
-          {accounts.map((account) => (
-            <DebitCard key={account.id} account={account} />
-          ))}
-        </div>
+      <div className="flex h-full flex-col gap-8">
+        {/* Header */}
+        <header className="flex items-center gap-4">
+          <Avatar className="h-11 w-11 border-2 border-background">
+            <AvatarImage src={user.avatar} alt={user.name} />
+            <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+          </Avatar>
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Search people and bills"
+              className="rounded-full bg-background pl-10"
+            />
+          </div>
+          <Button variant="ghost" size="icon" className="h-11 w-11 rounded-full bg-primary/10 text-primary">
+            <UserIcon />
+          </Button>
+        </header>
 
-        <div className="grid gap-8 lg:grid-cols-3">
-          <Card className="shadow-md">
+        {/* Main Content */}
+        <main className="flex-1 space-y-8 overflow-y-auto">
+          {/* Main Action Card */}
+          <Card className="bg-primary/90 text-primary-foreground shadow-lg">
             <CardHeader>
-              <CardTitle className="font-headline">UPI &amp; QR Code</CardTitle>
-              <CardDescription>
-                Receive payments instantly using your UPI details.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col items-center gap-4 text-center">
-               <div className="rounded-lg border bg-background p-4">
-                 <Image
-                    src={user.qrCodeUrl}
+               <Image
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=priya.sharma@mmbank&color=fff&bgcolor=3B82F6"
                     alt="UPI QR Code"
-                    width={180}
-                    height={180}
-                    className="rounded-md"
+                    width={60}
+                    height={60}
+                    className="rounded-lg border-4 border-white"
                   />
-               </div>
-               <div>
-                  <p className="text-sm text-muted-foreground">Your UPI ID</p>
-                  <p className="font-mono font-medium">{user.upiId}</p>
-               </div>
-                <Button variant="outline" className="w-full">Copy UPI ID</Button>
-            </CardContent>
-          </Card>
-
-           <Card className="shadow-md lg:col-span-2">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <div>
-                <CardTitle className="font-headline">Account Statement</CardTitle>
-                <CardDescription>
-                  A quick look at your recent account activity.
-                </CardDescription>
-              </div>
-               <Button asChild variant="outline" size="sm">
-                <Link href="/history">View All</Link>
-              </Button>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Description</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead className="text-right">Amount (₹)</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {transactions.slice(0, 5).map((transaction) => (
-                    <TableRow key={transaction.id}>
-                      <TableCell>
-                        <div className="font-medium">{transaction.description}</div>
-                        <div className="text-sm text-muted-foreground">{transaction.type}</div>
-                      </TableCell>
-                      <TableCell>{transaction.date}</TableCell>
-                      <TableCell className={`text-right font-medium ${transaction.amount > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                        {formatCurrency(transaction.amount)}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <p className="text-sm">Instant loans up to</p>
+              <p className="text-4xl font-bold">₹8 lakhs</p>
+              <div className="mt-4 flex items-center justify-between">
+                <p className="text-sm opacity-90">Check your offer & apply now</p>
+                <Button variant="secondary" size="sm" className="bg-white/90 text-primary hover:bg-white">Apply Now</Button>
+              </div>
             </CardContent>
           </Card>
-        </div>
 
-        <Card className="shadow-md">
-            <CardHeader>
-              <CardTitle className="font-headline">Quick Actions</CardTitle>
-              <CardDescription>
-                Your most-used actions, just a click away.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <Button asChild className="w-full justify-start gap-3 p-6 text-base" variant="outline">
-                <Link href="/transfer">
-                  <ArrowRightLeft className="h-5 w-5" />
-                  Transfer Funds
-                </Link>
+          {/* Quick Actions */}
+          <section>
+            <div className="grid grid-cols-4 gap-4 text-center">
+              <QuickAction icon={Scan} label="Scan any QR code" />
+              <QuickAction icon={Contact} label="Pay contacts" />
+              <QuickAction icon={Phone} label="Pay phone number" />
+              <QuickAction icon={Landmark} label="Bank transfer" />
+            </div>
+          </section>
+
+           {/* People */}
+          <section>
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold">People</h2>
+              <Button variant="ghost" size="sm" className="text-primary">
+                View all <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
-              <Button asChild className="w-full justify-start gap-3 p-6 text-base" variant="outline">
-                <Link href="/history">
-                  <History className="h-5 w-5" />
-                  View Statement
+            </div>
+            <div className="mt-4 grid grid-cols-4 gap-4">
+              {people.slice(0, 7).map((person) => (
+                 <Link href="#" key={person.id} className="flex flex-col items-center gap-2 text-center">
+                  <Avatar className="h-14 w-14">
+                    <AvatarImage src={person.avatar} />
+                    <AvatarFallback>{getInitials(person.name)}</AvatarFallback>
+                  </Avatar>
+                  <span className="text-sm font-medium">{person.name}</span>
                 </Link>
+              ))}
+               <div className="flex flex-col items-center gap-2 text-center">
+                  <Button variant="outline" className="h-14 w-14 rounded-full border-dashed">
+                      <ChevronRight className="h-6 w-6 text-muted-foreground" />
+                  </Button>
+                  <span className="text-sm font-medium">View all</span>
+                </div>
+            </div>
+          </section>
+
+          {/* Bills, recharges & more */}
+           <section>
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold">Bills, recharges & more</h2>
+               <Button variant="ghost" size="sm" className="text-primary">
+                View all <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
-              <Button asChild className="w-full justify-start gap-3 p-6 text-base" variant="outline">
-                <Link href="#">
-                  <CircleDollarSign className="h-5 w-5" />
-                  Pay Bills
+            </div>
+             <div className="mt-4 grid grid-cols-4 gap-4">
+              {bills.map((bill) => (
+                 <Link href="#" key={bill.id} className="flex flex-col items-center gap-2 text-center">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-100">
+                     <Image src={bill.iconUrl} alt={bill.name} width={32} height={32} />
+                  </div>
+                  <span className="text-sm font-medium">{bill.name}</span>
                 </Link>
-              </Button>
-               <Button asChild className="w-full justify-start gap-3 p-6 text-base" variant="outline">
-                <Link href="/profile">
-                  <History className="h-5 w-5" />
-                  Settings
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
+              ))}
+            </div>
+          </section>
+
+           {/* Your M&M Bank Account */}
+           <section>
+             <Card className="overflow-hidden shadow-lg">
+               <CardHeader className="flex-row items-center gap-4 bg-muted/50">
+                  <Landmark className="h-8 w-8 text-primary" />
+                 <div>
+                   <CardTitle className="text-base font-semibold">Your M&M Bank Account</CardTitle>
+                   <CardDescription>Savings Account</CardDescription>
+                 </div>
+               </CardHeader>
+               <CardContent className="p-4">
+                 <div className="flex items-center justify-between">
+                   <p className="text-lg font-bold">Check balance</p>
+                   <Button variant="outline" size="sm">Check</Button>
+                 </div>
+                 <hr className="my-4" />
+                 <div className="flex items-center justify-between">
+                   <p className="font-medium">Transaction history</p>
+                    <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                 </div>
+               </CardContent>
+             </Card>
+           </section>
+
+        </main>
       </div>
     </UserDashboardLayout>
   );

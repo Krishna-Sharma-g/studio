@@ -31,6 +31,19 @@ export type Customer = {
   joinedDate: string;
 };
 
+export type Person = {
+  id: string;
+  name: string;
+  avatar: string;
+}
+
+export type Bill = {
+  id: string;
+  name: string;
+  iconUrl: string;
+}
+
+
 export const user = {
   name: 'Priya Sharma',
   email: 'priya.sharma@mmbank.com',
@@ -87,3 +100,20 @@ export const customers: Customer[] = [
   { id: 'cus_5', name: 'Vikram Rao', email: 'vikram.r@example.com', accountNumber: '...9012', status: 'Frozen', joinedDate: '2023-09-25' },
   { id: 'cus_6', name: 'Anjali Gupta', email: 'anjali.g@example.com', accountNumber: '...6789', status: 'Active', joinedDate: '2024-02-18' },
 ];
+
+export const people: Person[] = [
+  { id: 'ppl_1', name: 'Aarav Sharma', avatar: 'https://i.pravatar.cc/150?u=aarav' },
+  { id: 'ppl_2', name: 'Diya Patel', avatar: 'https://i.pravatar.cc/150?u=diya' },
+  { id: 'ppl_3', name: 'Rohan Gupta', avatar: 'https://i.pravatar.cc/150?u=rohan' },
+  { id: 'ppl_4', name: 'Isha Singh', avatar: 'https://i.pravatar.cc/150?u=isha' },
+  { id: 'ppl_5', name: 'Kabir Kumar', avatar: 'https://i.pravatar.cc/150?u=kabir' },
+  { id: 'ppl_6', name: 'Myra Reddy', avatar: 'https://i.pravatar.cc/150?u=myra' },
+  { id: 'ppl_7', name: 'Arjun Das', avatar: 'https://i.pravatar.cc/150?u=arjun' },
+]
+
+export const bills: Bill[] = [
+  { id: 'bill_1', name: 'Mobile Recharge', iconUrl: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/mobile-recharge-2-870344.png' },
+  { id: 'bill_2', name: 'DTH Recharge', iconUrl: 'https://cdn4.iconfinder.com/data/icons/money-and-finance-25/512/dth_recharge-512.png' },
+  { id: 'bill_3', name: 'Electricity', iconUrl: 'https://cdn-icons-png.flaticon.com/512/2850/2850785.png' },
+  { id: 'bill_4', name: 'Credit Card', iconUrl: 'https://cdn-icons-png.flaticon.com/512/6942/6942468.png' },
+]
