@@ -15,10 +15,6 @@ const Logo = ({ className }: { className?: string }) => {
           d="M0 28V0L20 20L40 0V28H30L20 18L10 28H0Z"
           fill="hsl(var(--primary))"
         />
-        <path
-          d="M15 28V8L20 13L25 8V28H20V18L15 28Z"
-          fill="hsl(var(--foreground))"
-        />
       </svg>
       <span className="text-2xl font-bold tracking-tighter font-headline text-primary">
         M&M Bank
