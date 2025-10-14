@@ -12,8 +12,10 @@ interface PinInputProps {
 export function PinInput({ length = 4, onComplete }: PinInputProps) {
   const [pin, setPin] = useState<string[]>(Array(length).fill(''));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
     inputRefs.current = inputRefs.current.slice(0, length);
   }, [length]);
 
@@ -43,6 +45,11 @@ export function PinInput({ length = 4, onComplete }: PinInputProps) {
       inputRefs.current[index - 1]?.focus();
     }
   };
+
+  if (!isClient) {
+    // Render a placeholder or null on the server
+    return null;
+  }
 
   return (
     <div className="flex w-full justify-between gap-2 md:gap-4">
