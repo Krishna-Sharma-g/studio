@@ -95,7 +95,7 @@ export default function TransferPage() {
                 <Textarea id="memo" placeholder="Enter a brief description" />
               </div>
               <div className="flex justify-end">
-                <Button type="submit" className="bg-accent text-accent-foreground hover:bg-accent/90">
+                <Button type="submit">
                   <TransferIcon className="mr-2 h-4 w-4" />
                   Submit Transfer
                 </Button>
