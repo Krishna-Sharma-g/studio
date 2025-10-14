@@ -1,12 +1,7 @@
 "use client";
 
-import {
-  LayoutDashboard,
-  ArrowRightLeft as TransferIcon,
-  History,
-  User,
-} from "lucide-react";
-import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { ArrowRightLeft as TransferIcon } from "lucide-react";
+import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
 import {
   Card,
   CardContent,
@@ -27,13 +22,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { accounts } from "@/lib/data";
 
-const navItems = [
-  { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  { href: "/transfer", icon: TransferIcon, label: "Transfers" },
-  { href: "/history", icon: History, label: "History" },
-  { href: "/profile", icon: User, label: "Profile" },
-];
-
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -43,7 +31,7 @@ const formatCurrency = (amount: number) => {
 
 export default function TransferPage() {
   return (
-    <DashboardLayout navItems={navItems} userType="user">
+    <UserDashboardLayout>
       <div className="flex justify-center">
         <Card className="w-full max-w-2xl shadow-lg">
           <CardHeader>
@@ -116,6 +104,6 @@ export default function TransferPage() {
           </CardContent>
         </Card>
       </div>
-    </DashboardLayout>
+    </UserDashboardLayout>
   );
 }

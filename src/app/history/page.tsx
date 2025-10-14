@@ -1,10 +1,4 @@
-import {
-  LayoutDashboard,
-  ArrowRightLeft as TransferIcon,
-  History,
-  User,
-} from "lucide-react";
-import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
 import {
   Card,
   CardContent,
@@ -41,13 +35,6 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-const navItems = [
-  { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  { href: "/transfer", icon: TransferIcon, label: "Transfers" },
-  { href: "/history", icon: History, label: "History" },
-  { href: "/profile", icon: User, label: "Profile" },
-];
-
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -57,7 +44,7 @@ const formatCurrency = (amount: number) => {
 
 export default function HistoryPage() {
   return (
-    <DashboardLayout navItems={navItems} userType="user">
+    <UserDashboardLayout>
       <Card className="shadow-lg">
         <CardHeader>
           <CardTitle className="font-headline text-2xl">Transaction History</CardTitle>
@@ -137,6 +124,6 @@ export default function HistoryPage() {
           </Pagination>
         </CardContent>
       </Card>
-    </DashboardLayout>
+    </UserDashboardLayout>
   );
 }

@@ -23,20 +23,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { DashboardLayout } from "@/components/layout/dashboard-layout";
-import { accounts, transactions, user } from "@/lib/data";
-import {
-  LayoutDashboard,
-  ArrowRightLeft as TransferIcon,
-  User as UserIcon,
-} from "lucide-react";
-
-const navItems = [
-  { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  { href: "/transfer", icon: TransferIcon, label: "Transfers" },
-  { href: "/history", icon: History, label: "History" },
-  { href: "/profile", icon: UserIcon, label: "Profile" },
-];
+import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
+import { accounts, transactions } from "@/lib/data";
 
 export default function DashboardPage() {
   const formatCurrency = (amount: number) => {
@@ -47,10 +35,10 @@ export default function DashboardPage() {
   };
 
   return (
-    <DashboardLayout navItems={navItems} userType="user">
+    <UserDashboardLayout>
       <div className="grid gap-6">
         <div className="grid gap-6 md:grid-cols-2">
-          {accounts.map((account, index) => (
+          {accounts.map((account) => (
             <Card key={account.id} className="shadow-md">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-base font-medium font-headline">
@@ -135,6 +123,6 @@ export default function DashboardPage() {
           </Card>
         </div>
       </div>
-    </DashboardLayout>
+    </UserDashboardLayout>
   );
 }

@@ -1,10 +1,4 @@
-import {
-  LayoutDashboard,
-  ArrowRightLeft as TransferIcon,
-  History,
-  User,
-} from "lucide-react";
-import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,16 +12,9 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { user } from "@/lib/data";
 
-const navItems = [
-  { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  { href: "/transfer", icon: TransferIcon, label: "Transfers" },
-  { href: "/history", icon: History, label: "History" },
-  { href: "/profile", icon: User, label: "Profile" },
-];
-
 export default function ProfilePage() {
   return (
-    <DashboardLayout navItems={navItems} userType="user">
+    <UserDashboardLayout>
       <div className="flex justify-center">
         <div className="w-full max-w-4xl">
            <h1 className="text-3xl font-bold mb-6 font-headline">My Profile</h1>
@@ -105,6 +92,6 @@ export default function ProfilePage() {
           </Tabs>
         </div>
       </div>
-    </DashboardLayout>
+    </UserDashboardLayout>
   );
 }
