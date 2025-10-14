@@ -1,9 +1,7 @@
 import {
-  FileText,
-  Users,
   MoreHorizontal,
 } from "lucide-react";
-import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { AdminDashboardLayout } from "@/components/layout/admin-dashboard-layout";
 import {
   Card,
   CardContent,
@@ -38,11 +36,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const navItems = [
-  { href: "/admin/dashboard", icon: Users, label: "Customers" },
-  { href: "/admin/reports", icon: FileText, label: "Reports" },
-];
-
 export default function AdminDashboardPage() {
   const getBadgeVariant = (status: string) => {
     switch (status) {
@@ -58,7 +51,7 @@ export default function AdminDashboardPage() {
   };
 
   return (
-    <DashboardLayout navItems={navItems} userType="admin">
+    <AdminDashboardLayout>
       <Card className="shadow-lg">
         <CardHeader>
           <CardTitle className="font-headline text-2xl">Customer Management</CardTitle>
@@ -131,6 +124,6 @@ export default function AdminDashboardPage() {
           </Pagination>
         </CardContent>
       </Card>
-    </DashboardLayout>
+    </AdminDashboardLayout>
   );
 }

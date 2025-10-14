@@ -1,5 +1,4 @@
-import { FileText, Users } from "lucide-react";
-import { DashboardLayout } from "@/components/layout/dashboard-layout";
+import { AdminDashboardLayout } from "@/components/layout/admin-dashboard-layout";
 import {
   Card,
   CardContent,
@@ -27,11 +26,6 @@ import {
 } from "@/components/ui/table";
 import { transactions } from "@/lib/data";
 
-const navItems = [
-  { href: "/admin/dashboard", icon: Users, label: "Customers" },
-  { href: "/admin/reports", icon: FileText, label: "Reports" },
-];
-
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -44,7 +38,7 @@ const totalWithdrawals = transactions.filter(t => t.amount < 0).reduce((sum, t) 
 
 export default function AdminReportsPage() {
   return (
-    <DashboardLayout navItems={navItems} userType="admin">
+    <AdminDashboardLayout>
       <Card className="shadow-lg">
         <CardHeader>
           <CardTitle className="font-headline text-2xl">Transaction Reports</CardTitle>
@@ -136,6 +130,6 @@ export default function AdminReportsPage() {
             <Button variant="outline">Download CSV</Button>
         </CardFooter>
       </Card>
-    </DashboardLayout>
+    </AdminDashboardLayout>
   );
 }
