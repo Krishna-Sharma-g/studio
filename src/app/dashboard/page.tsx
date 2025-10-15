@@ -5,19 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from 'next/navigation';
 import {
-  ArrowRight,
+  Bot,
   Bell,
-  ChevronRight,
   Copy,
-  Download,
   History,
-  MessageCircle,
-  Plus,
-  QrCode,
-  Scan,
   Send,
   Share2,
-  Upload,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -35,6 +28,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 
 
 const QuickAction = ({ icon, label }: { icon: React.ElementType, label: string }) => {
@@ -108,12 +108,93 @@ export default function DashboardPage() {
             <h1 className="text-lg font-semibold">Hi {displayName}</h1>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon">
-              <MessageCircle className="h-6 w-6" />
-            </Button>
-            <Button variant="ghost" size="icon">
-              <Bell className="h-6 w-6" />
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Bot className="h-6 w-6" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>AI Assistant</DialogTitle>
+                  <DialogDescription>
+                    Your personal banking assistant. Ask me anything!
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="flex h-96 flex-col">
+                  <div className="flex-1 space-y-4 overflow-y-auto rounded-md bg-muted/50 p-4">
+                    <div className="flex items-start gap-3">
+                      <Avatar className="h-8 w-8">
+                        <AvatarFallback>AI</AvatarFallback>
+                      </Avatar>
+                      <div className="rounded-lg bg-background p-3 text-sm">
+                        <p>Hello! How can I help you with your banking needs today?</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-4 flex items-center gap-2">
+                    <Input placeholder="Type your message..." className="flex-1" />
+                    <Button>
+                      <Send className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+
+             <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Bell className="h-6 w-6" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80">
+                <div className="grid gap-4">
+                  <div className="space-y-2">
+                    <h4 className="font-medium leading-none">Notifications</h4>
+                    <p className="text-sm text-muted-foreground">
+                      You have 3 unread messages.
+                    </p>
+                  </div>
+                  <Separator />
+                   <div className="grid gap-2">
+                    <div className="grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+                      <span className="flex h-2 w-2 translate-y-1 rounded-full bg-primary" />
+                      <div className="grid gap-1">
+                        <p className="text-sm font-medium">
+                          Salary Credited
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Your account has been credited with ₹1,50,000.
+                        </p>
+                      </div>
+                    </div>
+                     <div className="grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+                      <span className="flex h-2 w-2 translate-y-1 rounded-full bg-primary" />
+                      <div className="grid gap-1">
+                        <p className="text-sm font-medium">
+                          Payment Reminder
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Your credit card bill is due tomorrow.
+                        </p>
+                      </div>
+                    </div>
+                     <div className="grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
+                      <span className="flex h-2 w-2 translate-y-1 rounded-full bg-transparent" />
+                      <div className="grid gap-1">
+                        <p className="text-sm font-medium">
+                          Netflix Payment
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          A payment of ₹799 was made to Netflix.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
           </div>
         </header>
 
@@ -174,7 +255,7 @@ export default function DashboardPage() {
           {/* Quick Actions */}
           <section className="grid grid-cols-3 gap-4 text-center">
             <QuickAction icon={Send} label="Send Money" />
-            <QuickAction icon={Download} label="Collect Money" />
+            <QuickAction icon={Send} label="Collect Money" />
             <QuickAction icon={History} label="Pending Requests" />
           </section>
 
