@@ -1,4 +1,9 @@
+
+'use client';
+
+import { useState } from 'react';
 import Link from "next/link"
+import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -13,6 +18,19 @@ import Logo from "@/components/logo"
 import { PinInput } from "@/components/ui/pin-input"
 
 export default function AdminLogin() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [pin, setPin] = useState('');
+  const router = useRouter();
+
+  const isFormComplete = name.trim() !== '' && email.trim() !== '' && pin.length === 4;
+
+  const handleSignIn = () => {
+    if (isFormComplete) {
+      router.push('/admin/dashboard');
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="mx-auto w-full max-w-sm shadow-lg">
@@ -34,6 +52,8 @@ export default function AdminLogin() {
                     type="text"
                     placeholder="Full Name"
                     required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                 />
             </div>
             <div className="grid gap-2">
@@ -43,14 +63,16 @@ export default function AdminLogin() {
                 type="email"
                 placeholder="admin@example.com"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
              <div className="grid gap-2">
               <Label htmlFor="pin">4-Digit PIN</Label>
-              <PinInput />
+              <PinInput onComplete={setPin} />
             </div>
-            <Button className="w-full" asChild>
-              <Link href="/admin/dashboard">Sign In</Link>
+            <Button className="w-full" onClick={handleSignIn} disabled={!isFormComplete}>
+              Sign In
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">

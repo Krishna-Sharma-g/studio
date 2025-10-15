@@ -1,23 +1,35 @@
+
 'use client';
 
 import { useState } from 'react';
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import { useRouter } from 'next/navigation';
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import Logo from "@/components/logo"
-import { PinInput } from "@/components/ui/pin-input"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Logo from "@/components/logo";
+import { PinInput } from "@/components/ui/pin-input";
 
 export default function UserLogin() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [pin, setPin] = useState('');
+  const router = useRouter();
+
+  const isFormComplete = name.trim() !== '' && email.trim() !== '' && pin.length === 4;
+
+  const handleLogin = () => {
+    if (isFormComplete) {
+      router.push(`/dashboard?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`);
+    }
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
@@ -65,10 +77,10 @@ export default function UserLogin() {
                   Forgot your PIN?
                 </Link>
               </div>
-              <PinInput />
+              <PinInput onComplete={setPin} />
             </div>
-            <Button className="w-full" asChild>
-              <Link href={`/dashboard?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`}>Login</Link>
+            <Button className="w-full" onClick={handleLogin} disabled={!isFormComplete}>
+              Login
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
