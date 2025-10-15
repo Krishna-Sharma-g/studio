@@ -12,10 +12,8 @@ interface PinInputProps {
 export function PinInput({ length = 4, onComplete }: PinInputProps) {
   const [pin, setPin] = useState<string[]>(Array(length).fill(''));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
     inputRefs.current = inputRefs.current.slice(0, length);
   }, [length]);
 
@@ -46,23 +44,6 @@ export function PinInput({ length = 4, onComplete }: PinInputProps) {
     }
   };
 
-  if (!isClient) {
-    // Render a placeholder or null on the server
-    return (
-        <div className="flex w-full justify-between gap-2 md:gap-4">
-            {Array(length).fill(0).map((_, index) => (
-                 <Input
-                    key={index}
-                    type="password"
-                    className="h-14 w-full text-center text-2xl font-bold"
-                    aria-label={`PIN digit ${index + 1}`}
-                    disabled
-                />
-            ))}
-        </div>
-    );
-  }
-
   return (
     <div className="flex w-full justify-between gap-2 md:gap-4">
       {pin.map((digit, index) => (
@@ -72,7 +53,7 @@ export function PinInput({ length = 4, onComplete }: PinInputProps) {
           type="password"
           inputMode="numeric"
           maxLength={1}
-          value={digit}
+          value={digit || ''}
           onChange={e => handleChange(e, index)}
           onKeyDown={e => handleKeyDown(e, index)}
           className="h-14 w-full text-center text-2xl font-bold"
