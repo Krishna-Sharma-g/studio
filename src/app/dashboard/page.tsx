@@ -27,6 +27,15 @@ import {
 } from "@/components/ui/card";
 import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
 import { user, services, accounts } from "@/lib/data";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+
 
 const QuickAction = ({ icon, label }: { icon: React.ElementType, label: string }) => {
   const Icon = icon;
@@ -136,7 +145,27 @@ export default function DashboardPage() {
                 </div>
                 <div className="flex items-center divide-x divide-white/20 text-sm">
                    <Link href="/history" className="px-3 hover:underline">View Transactions</Link>
-                   <Link href="#" className="pl-3 hover:underline">Manage UPI ID</Link>
+                   <Dialog>
+                    <DialogTrigger asChild>
+                      <button className="pl-3 hover:underline">My UPI ID & QR Code</button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-xs">
+                      <DialogHeader>
+                        <DialogTitle className="text-center">My UPI QR Code</DialogTitle>
+                      </DialogHeader>
+                      <div className="flex flex-col items-center justify-center gap-4 py-4">
+                        <div className="rounded-lg border bg-white p-2">
+                          <Image
+                            src={user.qrCodeUrl}
+                            alt="UPI QR Code"
+                            width={200}
+                            height={200}
+                          />
+                        </div>
+                        <p className="text-center font-mono text-sm text-muted-foreground">{user.upiId}</p>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </div>
             </CardContent>

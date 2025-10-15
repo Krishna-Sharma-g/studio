@@ -57,7 +57,7 @@ export const user = {
 export const accounts: Account[] = [
   { 
     id: 'acc_1', 
-    type: 'Checking', 
+    type: 'Savings', 
     number: '**** **** **** 1234', 
     accountNumber: '123456789012',
     balance: 450000.75,
@@ -70,7 +70,7 @@ export const accounts: Account[] = [
   },
   { 
     id: 'acc_2', 
-    type: 'Savings', 
+    type: 'Checking', 
     number: '**** **** **** 5678', 
     accountNumber: '987654321098',
     balance: 1250000.50,
