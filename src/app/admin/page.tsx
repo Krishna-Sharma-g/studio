@@ -32,7 +32,7 @@ export default function AdminLogin() {
                 <Input
                     id="name"
                     type="text"
-                    placeholder="Admin User"
+                    placeholder="Full Name"
                     required
                 />
             </div>
@@ -41,7 +41,7 @@ export default function AdminLogin() {
               <Input
                 id="email"
                 type="email"
-                placeholder="admin@mmbank.com"
+                placeholder="admin@example.com"
                 required
               />
             </div>

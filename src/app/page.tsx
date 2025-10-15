@@ -16,8 +16,8 @@ import Logo from "@/components/logo"
 import { PinInput } from "@/components/ui/pin-input"
 
 export default function UserLogin() {
-  const [name, setName] = useState("Priya Sharma");
-  const [email, setEmail] = useState("priya@example.com");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
@@ -38,7 +38,7 @@ export default function UserLogin() {
               <Input
                 id="name"
                 type="text"
-                placeholder="Priya Sharma"
+                placeholder="Full Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -49,7 +49,7 @@ export default function UserLogin() {
               <Input
                 id="email"
                 type="email"
-                placeholder="priya@example.com"
+                placeholder="name@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
