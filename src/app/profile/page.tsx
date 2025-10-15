@@ -158,7 +158,9 @@ export default function ProfilePage() {
                              <DialogClose asChild>
                                 <Button type="button" variant="secondary">Cancel</Button>
                             </DialogClose>
-                            <Button type="submit">Save</Button>
+                            <DialogClose asChild>
+                                <Button type="submit">Save</Button>
+                            </DialogClose>
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>
