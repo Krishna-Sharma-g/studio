@@ -1,6 +1,8 @@
+
 "use client";
 
-import { ArrowRightLeft as TransferIcon } from "lucide-react";
+import { useState } from "react";
+import { ArrowRightLeft as TransferIcon, CheckCircle } from "lucide-react";
 import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
 import {
   Card,
@@ -23,8 +25,23 @@ import { Textarea } from "@/components/ui/textarea";
 import { banks } from "@/lib/data";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PinInput } from "@/components/ui/pin-input";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function TransferPage() {
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setShowSuccessDialog(true);
+  };
+
   return (
     <UserDashboardLayout>
       <div className="flex justify-center">
@@ -42,7 +59,7 @@ export default function TransferPage() {
                 <TabsTrigger value="bank">Bank Transfer</TabsTrigger>
               </TabsList>
               <TabsContent value="upi">
-                <form className="grid gap-6 pt-4">
+                <form className="grid gap-6 pt-4" onSubmit={handleSubmit}>
                   <div className="grid gap-2">
                     <Label htmlFor="upi-id">Enter UPI ID</Label>
                     <Input id="upi-id" placeholder="name@bank" />
@@ -71,7 +88,7 @@ export default function TransferPage() {
                 </form>
               </TabsContent>
               <TabsContent value="bank">
-                 <form className="grid gap-6 pt-4">
+                 <form className="grid gap-6 pt-4" onSubmit={handleSubmit}>
                     <div className="grid gap-2">
                       <Label htmlFor="account-number">Enter Account Number</Label>
                       <Input id="account-number" placeholder="1234567890" />
@@ -118,6 +135,25 @@ export default function TransferPage() {
           </CardContent>
         </Card>
       </div>
+
+      <AlertDialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <div className="flex flex-col items-center text-center">
+               <CheckCircle className="h-20 w-20 text-green-500 mb-4" />
+              <AlertDialogTitle className="text-2xl font-headline">Successful</AlertDialogTitle>
+              <AlertDialogDescription>
+                Your fund transfer has been completed successfully.
+              </AlertDialogDescription>
+            </div>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="sm:justify-center">
+             <Button onClick={() => setShowSuccessDialog(false)}>
+              Done
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </UserDashboardLayout>
   );
 }
