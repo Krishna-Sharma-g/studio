@@ -1,4 +1,4 @@
-import { Share2 } from "lucide-react";
+import { ArrowRightLeft, Battery, Calendar, ClipboardList, CreditCard, Gift, Landmark, Share2, Ticket, Users } from "lucide-react";
 
 export type Account = {
   id: string;
@@ -34,7 +34,7 @@ export type Customer = {
 };
 
 export type Person = {
-  id: string;
+  id:string;
   name: string;
   avatar: string;
 }
@@ -42,7 +42,7 @@ export type Person = {
 export type Bill = {
   id: string;
   name: string;
-  iconUrl: string | React.ElementType;
+  icon: React.ElementType;
 }
 
 
@@ -113,9 +113,21 @@ export const people: Person[] = [
   { id: 'ppl_7', name: 'Arjun Das', avatar: 'https://i.pravatar.cc/150?u=arjun' },
 ]
 
+export const services: Bill[] = [
+  { id: 'service_1', name: 'Accounts & Deposits', icon: Users },
+  { id: 'service_2', name: 'Fund Transfer', icon: ArrowRightLeft },
+  { id: 'service_3', name: 'Recharge', icon: Battery },
+  { id: 'service_4', name: 'Bill Payment', icon: Calendar },
+  { id: 'service_5', name: 'Ticketing', icon: Ticket },
+  { id: 'service_6', name: 'Cards & Loans', icon: CreditCard },
+  { id: 'service_7', name: 'Offers', icon: Gift },
+  { id: 'service_8', name: 'Investments & Insurance', icon: Landmark },
+  { id: 'service_9', name: 'Services', icon: ClipboardList },
+]
+
 export const bills: Bill[] = [
-  { id: 'bill_1', name: 'Mobile Postpaid', iconUrl: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/mobile-recharge-2-870344.png' },
-  { id: 'bill_2', name: 'DTH', iconUrl: 'https://cdn4.iconfinder.com/data/icons/money-and-finance-25/512/dth_recharge-512.png' },
-  { id: 'bill_3', name: 'Electricity', iconUrl: 'https://cdn-icons-png.flaticon.com/512/2850/2850785.png' },
-  { id: 'bill_4', name: 'Credit Card', iconUrl: 'https://cdn-icons-png.flaticon.com/512/6942/6942468.png' },
+  { id: 'bill_1', name: 'Mobile Postpaid', icon: Share2 },
+  { id: 'bill_2', name: 'DTH', icon: Share2 },
+  { id: 'bill_3', name: 'Electricity', icon: Share2 },
+  { id: 'bill_4', name: 'Credit Card', icon: Share2 },
 ]

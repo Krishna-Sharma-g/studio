@@ -24,7 +24,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
-import { user, bills as initialBills } from "@/lib/data";
+import { user, services } from "@/lib/data";
 
 const QuickAction = ({ icon, label }: { icon: React.ElementType, label: string }) => {
   const Icon = icon;
@@ -41,16 +41,12 @@ const QuickAction = ({ icon, label }: { icon: React.ElementType, label: string }
   );
 };
 
-const BillPayIcon = ({ bill }: { bill: { id: string, name: string, iconUrl: string | React.ElementType } }) => {
-  const Icon = bill.iconUrl;
+const ServiceIcon = ({ service }: { service: { id: string, name: string, icon: React.ElementType } }) => {
+  const Icon = service.icon;
   return (
-    <Link href="#" key={bill.id} className="flex flex-col items-center justify-center gap-2 rounded-lg border bg-card p-4 hover:bg-accent">
-      {typeof Icon === 'string' ? (
-        <Image src={Icon} alt={bill.name} width={32} height={32} />
-      ) : (
+    <Link href="#" key={service.id} className="flex flex-col items-center justify-center gap-2 rounded-lg bg-card p-4 text-center hover:bg-accent">
         <Icon className="h-8 w-8 text-primary" />
-      )}
-      <span className="text-center text-xs font-medium">{bill.name}</span>
+      <span className="text-xs font-medium">{service.name}</span>
     </Link>
   );
 };
@@ -63,15 +59,6 @@ export default function DashboardPage() {
       .map((n) => n[0])
       .join("");
   };
-  
-  const bills = [
-    ...initialBills,
-    { id: 'bill_5', name: 'Landline/Broadband', iconUrl: 'https://cdn-icons-png.flaticon.com/512/9483/9483327.png' },
-    { id: 'bill_6', name: 'Piped Gas', iconUrl: 'https://cdn-icons-png.flaticon.com/512/616/616487.png' },
-    { id: 'bill_7', name: 'LPG Cylinder Booking', iconUrl: 'https://cdn-icons-png.flaticon.com/512/1373/1373320.png' },
-    { id: 'bill_8', name: 'Water', iconUrl: 'https://cdn-icons-png.flaticon.com/512/600/600293.png' },
-    { id: 'bill_9', name: 'FASTag', iconUrl: 'https://cdn-icons-png.flaticon.com/512/3063/3063821.png' },
-  ]
 
   return (
     <UserDashboardLayout>
@@ -129,17 +116,12 @@ export default function DashboardPage() {
             <QuickAction icon={History} label="Pending Requests" />
           </section>
 
-          {/* Bill Pay & Recharge */}
+          {/* Services Grid */}
           <section>
-            <h2 className="text-lg font-semibold">Bill Pay & Recharge</h2>
-            <div className="mt-4 grid grid-cols-4 gap-3">
-              {bills.slice(0, 8).map((bill) => (
-                <BillPayIcon key={bill.id} bill={bill} />
+            <div className="grid grid-cols-3 gap-4">
+              {services.map((service) => (
+                <ServiceIcon key={service.id} service={service} />
               ))}
-              <div className="flex flex-col items-center justify-center gap-2 rounded-lg border bg-card p-4 hover:bg-accent">
-                <Plus className="h-8 w-8 text-primary" />
-                <span className="text-center text-xs font-medium">See More</span>
-              </div>
             </div>
           </section>
 
