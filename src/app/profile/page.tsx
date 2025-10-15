@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,7 +39,16 @@ const DetailItem = ({ label, value }: { label: string, value: string | undefined
 
 
 export default function ProfilePage() {
-    const [user, setUser] = useState(initialUser);
+    const searchParams = useSearchParams();
+    const nameParam = searchParams.get('name');
+    const emailParam = searchParams.get('email');
+    
+    const [user, setUser] = useState({
+        ...initialUser,
+        name: nameParam || initialUser.name,
+        email: emailParam || initialUser.email,
+    });
+    
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editedUser, setEditedUser] = useState({
         name: user.name,

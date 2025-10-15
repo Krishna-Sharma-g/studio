@@ -1,4 +1,8 @@
+
+'use client';
+
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,15 +15,40 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CreditCard, LogOut, Settings, User } from "lucide-react";
-import { user } from "@/lib/data";
+import { user as defaultUser } from "@/lib/data";
 
 export function UserNav() {
+  const searchParams = useSearchParams();
+  const nameParam = searchParams.get('name');
+  const emailParam = searchParams.get('email');
+
+  const user = {
+    name: nameParam || defaultUser.name,
+    email: emailParam || defaultUser.email,
+    avatar: defaultUser.avatar
+  }
+
   const getInitials = (name: string) => {
     return name
       .split(" ")
       .map((n) => n[0])
       .join("");
   };
+  
+  const navLinks = [
+    { href: "/profile", icon: User, label: "Profile" },
+    { href: "/history", icon: CreditCard, label: "Billing" },
+    { href: "/profile", icon: Settings, label: "Settings" },
+  ].map(item => {
+        const url = new URL(item.href, "http://localhost");
+        searchParams.forEach((value, key) => {
+            url.searchParams.append(key, value);
+        })
+        return {
+            ...item,
+            hrefWithParams: `${url.pathname}${url.search}`
+        }
+    });
 
   return (
     <DropdownMenu>
@@ -42,24 +71,14 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href="/profile">
-              <User />
-              Profile
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-             <Link href="/history">
-              <CreditCard />
-              Billing
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/profile">
-              <Settings />
-              Settings
-            </Link>
-          </DropdownMenuItem>
+          {navLinks.map(link => (
+             <DropdownMenuItem key={link.label} asChild>
+              <Link href={link.hrefWithParams}>
+                <link.icon />
+                {link.label}
+              </Link>
+            </DropdownMenuItem>
+          ))}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
