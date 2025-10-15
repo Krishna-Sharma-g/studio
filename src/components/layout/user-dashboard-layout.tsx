@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -38,11 +39,10 @@ export function UserDashboardLayout({ children }: { children: React.ReactNode })
                     <Link
                     href={item.href}
                     className={cn(
-                        "flex flex-col items-center justify-center gap-1 rounded-full h-16 w-16 -translate-y-4 border-4 border-background bg-primary text-primary-foreground shadow-lg transition-transform hover:scale-105",
+                        "flex h-16 w-16 -translate-y-4 flex-col items-center justify-center rounded-full border-4 border-background bg-primary text-center text-xs font-medium leading-tight text-primary-foreground shadow-lg transition-transform hover:scale-105",
                     )}
                     >
-                    <item.icon className="h-6 w-6" />
-                    <span className="text-xs">{item.label}</span>
+                    <span>Scan<br/>to Pay</span>
                     </Link>
                 </div>
               )
