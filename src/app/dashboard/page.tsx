@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -19,7 +20,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { UserDashboardLayout } from "@/components/layout/user-dashboard-layout";
-import { user, services, accounts, people } from "@/lib/data";
+import { user, services, accounts, people, Person } from "@/lib/data";
 import {
   Dialog,
   DialogContent,
@@ -74,6 +75,9 @@ export default function DashboardPage() {
   const email = searchParams.get('email');
   const nameParam = searchParams.get('name');
   const [showBalance, setShowBalance] = useState(false);
+  const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
+  const [requestAmount, setRequestAmount] = useState('');
+  const [chatMessages, setChatMessages] = useState<string[]>([]);
 
   let displayName = user.name;
   if (nameParam) {
@@ -99,6 +103,26 @@ export default function DashboardPage() {
       .split(" ")
       .map((n) => n[0])
       .join("");
+  };
+
+  const handleSelectPerson = (person: Person) => {
+    setSelectedPerson(person);
+    setChatMessages([]);
+    setRequestAmount('');
+  };
+
+  const handleRequestMoney = () => {
+    if (requestAmount && parseFloat(requestAmount) > 0) {
+      const amountFormatted = formatCurrency(parseFloat(requestAmount));
+      setChatMessages([`You requested ${amountFormatted}`]);
+      setRequestAmount('');
+    }
+  };
+  
+  const resetCollectMoneyDialog = () => {
+    setSelectedPerson(null);
+    setChatMessages([]);
+    setRequestAmount('');
   };
 
   return (
@@ -261,44 +285,81 @@ export default function DashboardPage() {
           {/* Quick Actions */}
           <section className="grid grid-cols-3 gap-4 text-center">
             <QuickAction icon={Send} label="Send Money" href="/transfer" />
-            <Dialog>
+            <Dialog onOpenChange={(open) => !open && resetCollectMoneyDialog()}>
               <DialogTrigger asChild>
                 <div>
                   <QuickAction icon={Send} label="Collect Money" />
                 </div>
               </DialogTrigger>
               <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Request Money</DialogTitle>
-                  <DialogDescription>
-                    Search for a contact to request money from.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <Input placeholder="Search by name or UPI ID" />
-                  <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-muted-foreground">
-                      Recent Contacts
-                    </h3>
-                    <div className="flex flex-col gap-2">
-                      {people.map((person) => (
-                        <Link
-                          href="/transfer"
-                          key={person.id}
-                          className="flex items-center gap-3 rounded-md p-2 hover:bg-accent"
-                        >
-                          <Avatar>
-                            <AvatarImage src={person.avatar} />
-                            <AvatarFallback>
-                              {getInitials(person.name)}
-                            </AvatarFallback>
-                          </Avatar>
-                          <span className="font-medium">{person.name}</span>
-                        </Link>
-                      ))}
+                {!selectedPerson ? (
+                  <>
+                    <DialogHeader>
+                      <DialogTitle>Request Money</DialogTitle>
+                      <DialogDescription>
+                        Search for a contact to request money from.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      <Input placeholder="Search by name or UPI ID" />
+                      <div className="space-y-2">
+                        <h3 className="text-sm font-medium text-muted-foreground">
+                          Recent Contacts
+                        </h3>
+                        <div className="flex flex-col gap-2">
+                          {people.map((person) => (
+                            <button
+                              key={person.id}
+                              onClick={() => handleSelectPerson(person)}
+                              className="flex items-center gap-3 rounded-md p-2 text-left hover:bg-accent"
+                            >
+                              <Avatar>
+                                <AvatarImage src={person.avatar} />
+                                <AvatarFallback>
+                                  {getInitials(person.name)}
+                                </AvatarFallback>
+                              </Avatar>
+                              <span className="font-medium">{person.name}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </>
+                ) : (
+                  <>
+                    <DialogHeader className="border-b pb-3">
+                      <div className="flex items-center gap-3">
+                        <Avatar>
+                          <AvatarImage src={selectedPerson.avatar} />
+                           <AvatarFallback>{getInitials(selectedPerson.name)}</AvatarFallback>
+                        </Avatar>
+                        <DialogTitle>{selectedPerson.name}</DialogTitle>
+                      </div>
+                    </DialogHeader>
+                    <div className="flex h-80 flex-col justify-between">
+                      <div className="flex-1 space-y-4 overflow-y-auto p-4">
+                         {chatMessages.map((msg, index) => (
+                           <div key={index} className="flex justify-end">
+                             <div className="max-w-xs rounded-lg bg-primary p-3 text-primary-foreground">
+                               <p>{msg}</p>
+                             </div>
+                           </div>
+                         ))}
+                      </div>
+                      <div className="flex items-center gap-2 border-t p-4">
+                        <Input
+                          type="number"
+                          placeholder="Enter amount"
+                          value={requestAmount}
+                          onChange={(e) => setRequestAmount(e.target.value)}
+                          className="flex-1"
+                        />
+                        <Button onClick={handleRequestMoney}>Request</Button>
+                      </div>
+                    </div>
+                  </>
+                )}
               </DialogContent>
             </Dialog>
             <QuickAction icon={History} label="Pending Requests" />
@@ -318,3 +379,5 @@ export default function DashboardPage() {
     </UserDashboardLayout>
   );
 }
+
+    
