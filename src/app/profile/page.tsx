@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import { useState } from 'react';
@@ -88,7 +87,7 @@ export default function ProfilePage() {
                 <div className="flex flex-col items-center gap-4 sm:flex-row">
                     <div className="rounded-lg border bg-white p-2">
                         <Image
-                            src={user.qrCodeUrl}
+                            src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${user.upiId}`}
                             alt="UPI QR Code"
                             width={120}
                             height={120}

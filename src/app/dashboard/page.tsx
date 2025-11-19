@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import { useState } from 'react';
@@ -13,6 +12,7 @@ import {
   History,
   Send,
   Share2,
+  Users,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -60,15 +60,34 @@ const QuickAction = ({ icon, label, href }: { icon: React.ElementType, label: st
   return content;
 };
 
-const ServiceIcon = ({ service }: { service: { id: string, name: string, icon: React.ElementType } }) => {
+const ServiceIcon = ({ service }: { service: { id: string, name: string, icon: React.ElementType, href?: string } }) => {
   const Icon = service.icon;
-  return (
-    <Link href="#" key={service.id} className="flex flex-col items-center justify-center gap-2 rounded-lg bg-card p-4 text-center hover:bg-accent">
+
+  const content = (
+    <div className="flex flex-col items-center justify-center gap-2 rounded-lg bg-card p-4 text-center hover:bg-accent">
         <Icon className="h-8 w-8 text-primary" />
-      <span className="text-xs font-medium">{service.name}</span>
-    </Link>
+        <span className="text-xs font-medium">{service.name}</span>
+    </div>
   );
+
+  if (service.href) {
+    return (
+        <Link href={service.href} key={service.id}>
+            {content}
+        </Link>
+    );
+  }
+
+  // Fallback for items that should be Dialogs or other actions
+  return <div className='cursor-pointer'>{content}</div>;
 };
+
+const DetailItem = ({ label, value }: { label: string, value: string | undefined }) => (
+    <div>
+        <p className="text-sm text-muted-foreground">{label}</p>
+        <p className="font-medium">{value}</p>
+    </div>
+);
 
 
 export default function DashboardPage() {
@@ -82,7 +101,7 @@ export default function DashboardPage() {
 
   let displayName = user.name;
   if (nameParam) {
-    displayName = nameParam.split(' ')[0];
+    displayName = nameParam;
   } else if (email) {
     const emailName = email.split('@')[0];
     displayName = emailName.charAt(0).toUpperCase() + emailName.slice(1);
@@ -140,7 +159,7 @@ export default function DashboardPage() {
               <AvatarImage src={user.avatar} alt={displayName} />
               <AvatarFallback>{getInitials(displayName)}</AvatarFallback>
             </Avatar>
-            <h1 className="text-lg font-semibold">Hi {displayName}</h1>
+            <h1 className="text-lg font-semibold">Hi {displayName.split(' ')[0]}</h1>
           </div>
           <div className="flex items-center gap-2">
             <Dialog>
@@ -263,7 +282,7 @@ export default function DashboardPage() {
                    <Link href="/history" className="px-3 hover:underline">View Transactions</Link>
                    <Dialog>
                     <DialogTrigger asChild>
-                      <button className="pl-3 hover:underline">My UPI ID & QR Code</button>
+                      <button className="pl-3 hover:underline">My UPI ID &amp; QR Code</button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-xs">
                       <DialogHeader>
@@ -372,10 +391,38 @@ export default function DashboardPage() {
 
           {/* Services Grid */}
           <section>
-            <div className="grid grid-cols-3 gap-4">
-              {services.map((service) => (
-                <ServiceIcon key={service.id} service={service} />
-              ))}
+             <div className="grid grid-cols-3 gap-4">
+              {services.map((service) => {
+                if (service.id === 'service_1') { // Accounts & Deposits
+                  return (
+                    <Dialog key={service.id}>
+                      <DialogTrigger asChild>
+                        <div>
+                          <ServiceIcon service={service} />
+                        </div>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-md">
+                        <DialogHeader>
+                          <DialogTitle>Account Details</DialogTitle>
+                          <DialogDescription>
+                            Your primary account and personal information.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-4 py-4">
+                          <DetailItem label="Full Name" value={displayName} />
+                          <DetailItem label="Email Address" value={email || user.email} />
+                          <Separator />
+                          <DetailItem label="Account Number" value={savingsAccount?.number} />
+                          <DetailItem label="IFSC Code" value={savingsAccount?.ifsc} />
+                          <Separator />
+                          <DetailItem label="UPI ID" value={upiId} />
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  );
+                }
+                return <ServiceIcon key={service.id} service={service} />;
+              })}
             </div>
           </section>
 
@@ -384,5 +431,3 @@ export default function DashboardPage() {
     </UserDashboardLayout>
   );
 }
-
-    
