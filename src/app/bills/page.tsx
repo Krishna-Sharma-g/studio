@@ -47,8 +47,8 @@ export default function BillPaymentPage() {
   const [selectedBill, setSelectedBill] = useState<{label: string, status: string} | null>(null);
 
   const handleBillClick = (bill: (typeof billOptions)[0]) => {
-    if (bill.isExternal) {
-      setSelectedBill({ label: bill.label, status: bill.status! });
+    if (bill.isExternal && bill.status) {
+      setSelectedBill({ label: bill.label, status: bill.status });
     }
   };
 
@@ -86,34 +86,34 @@ export default function BillPaymentPage() {
           <CardDescription>Select a category to pay your bills.</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            <Dialog onOpenChange={(isOpen) => !isOpen && setSelectedBill(null)}>
-                {billOptions.map((option) => {
-                    const content = (
-                        <div
-                        key={option.label}
-                        className="flex items-center justify-between rounded-lg border p-4 transition-colors hover:bg-muted/50 cursor-pointer"
-                        >
-                        <div className="flex items-center gap-4">
-                            <option.icon className="h-8 w-8 text-primary" />
-                            <div>
-                            <p className="font-semibold">{option.label}</p>
-                            <p className="text-sm text-muted-foreground">{option.description}</p>
-                            </div>
-                        </div>
-                        <ArrowRight className="h-5 w-5 text-muted-foreground" />
-                        </div>
-                    );
+          <Dialog onOpenChange={(isOpen) => !isOpen && setSelectedBill(null)}>
+            <div className="space-y-4">
+              {billOptions.map((option) => {
+                  const content = (
+                      <div
+                      key={option.label}
+                      className="flex items-center justify-between rounded-lg border p-4 transition-colors hover:bg-muted/50 cursor-pointer"
+                      >
+                      <div className="flex items-center gap-4">
+                          <option.icon className="h-8 w-8 text-primary" />
+                          <div>
+                          <p className="font-semibold">{option.label}</p>
+                          <p className="text-sm text-muted-foreground">{option.description}</p>
+                          </div>
+                      </div>
+                      <ArrowRight className="h-5 w-5 text-muted-foreground" />
+                      </div>
+                  );
 
-                    if (option.isExternal) {
-                        return <DialogTrigger asChild key={option.label} onClick={() => handleBillClick(option)}>{content}</DialogTrigger>
-                    }
+                  if (option.isExternal) {
+                      return <DialogTrigger asChild key={option.label} onClick={() => handleBillClick(option)}>{content}</DialogTrigger>
+                  }
 
-                    return <Link href={option.href} key={option.label}>{content}</Link>
-                })}
-                {selectedBill && <BillDialogContent />}
-            </Dialog>
-          </div>
+                  return <Link href={option.href} key={option.label}>{content}</Link>
+              })}
+            </div>
+            {selectedBill && <BillDialogContent />}
+          </Dialog>
         </CardContent>
       </Card>
     </UserDashboardLayout>

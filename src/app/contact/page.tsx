@@ -22,11 +22,11 @@ const serviceOptions = [
     label: "Q&A AI Chatbot",
     value: "Chat Now",
     description: "Ask questions to our AI assistant",
-    href: "/dashboard" // Placeholder link, should open AI chat in dashboard
+    href: "/dashboard"
   },
 ];
 
-export default function ServicesPage() {
+export default function ContactPage() {
   return (
     <UserDashboardLayout>
       <Card className="shadow-lg">
