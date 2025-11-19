@@ -29,6 +29,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
 } from "@/components/ui/dialog"
 import {
   Popover,
@@ -108,7 +109,7 @@ export default function DashboardPage() {
   }
   
   const upiId = nameParam 
-    ? `${nameParam.toLowerCase().replace(' ', '.')}@mmbank`
+    ? `${nameParam.toLowerCase().replace(/\\s+/g, '.')}@mmbank`
     : user.upiId;
 
   const savingsAccount = accounts.find(acc => acc.type === 'Savings');
@@ -291,7 +292,7 @@ export default function DashboardPage() {
                       <div className="flex flex-col items-center justify-center gap-4 py-4">
                         <div className="rounded-lg border bg-white p-2">
                           <Image
-                            src={user.qrCodeUrl}
+                            src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${upiId}`}
                             alt="UPI QR Code"
                             width={200}
                             height={200}
@@ -411,12 +412,13 @@ export default function DashboardPage() {
                         <div className="space-y-4 py-4">
                           <DetailItem label="Full Name" value={displayName} />
                           <DetailItem label="Email Address" value={email || user.email} />
-                          <Separator />
-                          <DetailItem label="Account Number" value={savingsAccount?.number} />
-                          <DetailItem label="IFSC Code" value={savingsAccount?.ifsc} />
-                          <Separator />
                           <DetailItem label="UPI ID" value={upiId} />
                         </div>
+                        <DialogFooter>
+                            <Button asChild variant="outline">
+                                <Link href="/">Create New Account</Link>
+                            </Button>
+                        </DialogFooter>
                       </DialogContent>
                     </Dialog>
                   );
