@@ -87,6 +87,10 @@ export default function DashboardPage() {
     const emailName = email.split('@')[0];
     displayName = emailName.charAt(0).toUpperCase() + emailName.slice(1);
   }
+  
+  const upiId = nameParam 
+    ? `${nameParam.toLowerCase().replace(' ', '.')}@mmbank`
+    : user.upiId;
 
   const savingsAccount = accounts.find(acc => acc.type === 'Savings');
 
@@ -274,7 +278,7 @@ export default function DashboardPage() {
                             height={200}
                           />
                         </div>
-                        <p className="text-center font-mono text-sm text-muted-foreground">{user.upiId}</p>
+                        <p className="text-center font-mono text-sm text-muted-foreground">{upiId}</p>
                       </div>
                     </DialogContent>
                   </Dialog>

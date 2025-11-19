@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState } from 'react';
@@ -47,6 +48,7 @@ export default function ProfilePage() {
         ...initialUser,
         name: nameParam || initialUser.name,
         email: emailParam || initialUser.email,
+        upiId: nameParam ? `${nameParam.toLowerCase().replace(' ', '.')}@mmbank` : initialUser.upiId,
     });
     
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -65,7 +67,11 @@ export default function ProfilePage() {
     };
 
     const handleSaveChanges = () => {
-        setUser(prev => ({ ...prev, name: editedUser.name }));
+        setUser(prev => ({ 
+            ...prev, 
+            name: editedUser.name,
+            upiId: `${editedUser.name.toLowerCase().replace(' ', '.')}@mmbank`
+        }));
         // In a real app, you'd also save the other fields.
         setIsEditModalOpen(false);
     };
