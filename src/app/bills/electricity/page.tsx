@@ -8,8 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useUser, useFirestore, useMemoFirebase } from '@/firebase';
-import { collection, query, where } from 'firebase/firestore';
+import { useUser, useFirestore, useMemoFirebase } from '@/firebase/provider';
 import { useCollection } from '@/firebase/firestore/use-collection';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -31,10 +30,13 @@ export default function ElectricityBillPage() {
 
     const electricityBillQuery = useMemoFirebase(() => {
         if (!firestore || !user || !submittedConsumerNumber) return null;
-        return query(
-            collection(firestore, `users/${user.uid}/electricity_bills`),
-            where('consumerNumber', '==', submittedConsumerNumber)
-        );
+        // Shimmed query descriptor (no Firestore) — kept for API compatibility with useCollection shim.
+        return {
+            __memo: true,
+            type: 'shim-query',
+            path: `users/${user.uid}/electricity_bills`,
+            filter: { consumerNumber: submittedConsumerNumber },
+        };
     }, [firestore, user, submittedConsumerNumber]);
 
     const { data: bills, isLoading } = useCollection<ElectricityBill>(electricityBillQuery);

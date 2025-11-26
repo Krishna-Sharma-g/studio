@@ -8,8 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useUser, useFirestore, useMemoFirebase } from '@/firebase';
-import { collection, query, where } from 'firebase/firestore';
+import { useUser, useFirestore, useMemoFirebase } from '@/firebase/provider';
 import { useCollection } from '@/firebase/firestore/use-collection';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -31,10 +30,13 @@ export default function LpgBillPage() {
 
     const lpgBillQuery = useMemoFirebase(() => {
         if (!firestore || !user || !submittedConnectionId) return null;
-        return query(
-            collection(firestore, `users/${user.uid}/lpg_bills`),
-            where('connectionId', '==', submittedConnectionId)
-        );
+        // Shimbed query descriptor for compatibility with the Firestore shim
+        return {
+            __memo: true,
+            type: 'shim-query',
+            path: `users/${user.uid}/lpg_bills`,
+            filter: { connectionId: submittedConnectionId },
+        };
     }, [firestore, user, submittedConnectionId]);
 
     const { data: bills, isLoading } = useCollection<LpgBill>(lpgBillQuery);
