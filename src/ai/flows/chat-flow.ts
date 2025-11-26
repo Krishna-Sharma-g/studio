@@ -1,4 +1,4 @@
-'use server';
+"use server";
 /**
  * @fileOverview A simple AI chatbot flow for M&M Bank.
  *
@@ -7,7 +7,7 @@
  * - ChatOutput - The return type for the chat function.
  */
 
-import { ai } from '@/ai/genkit';
+import { getAI } from '@/ai/genkit';
 import { z } from 'genkit';
 
 const ChatInputSchema = z.object({
@@ -21,29 +21,31 @@ const ChatOutputSchema = z.object({
 export type ChatOutput = z.infer<typeof ChatOutputSchema>;
 
 export async function chat(input: ChatInput): Promise<ChatOutput> {
-  const result = await chatFlow(input);
-  return result;
-}
+  const ai = await getAI();
 
-const prompt = ai.definePrompt({
-  name: 'chatPrompt',
-  input: { schema: ChatInputSchema },
-  output: { schema: ChatOutputSchema },
-  prompt: `You are a friendly and helpful banking assistant for M&M Bank.
+  const prompt = ai.definePrompt({
+    name: 'chatPrompt',
+    input: { schema: ChatInputSchema },
+    output: { schema: ChatOutputSchema },
+    prompt: `You are a friendly and helpful banking assistant for M&M Bank.
 Your goal is to answer the user's questions in simple, clear, and easy-to-understand English.
 Avoid jargon and complex financial terms.
 
 User's question: {{{query}}}`,
-});
+  });
 
-const chatFlow = ai.defineFlow(
-  {
-    name: 'chatFlow',
-    inputSchema: ChatInputSchema,
-    outputSchema: ChatOutputSchema,
-  },
-  async (input) => {
-    const { output } = await prompt(input);
-    return output!;
-  }
-);
+  const chatFlow = ai.defineFlow(
+    {
+      name: 'chatFlow',
+      inputSchema: ChatInputSchema,
+      outputSchema: ChatOutputSchema,
+    },
+    async (input) => {
+      const { output } = await prompt(input);
+      return output!;
+    }
+  );
+
+  const result = await chatFlow(input);
+  return result;
+}
