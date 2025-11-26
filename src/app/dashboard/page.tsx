@@ -121,7 +121,7 @@ export default function DashboardPage() {
   }
   
   const upiId = nameParam 
-    ? `${nameParam.toLowerCase().replace(/\\s+/g, '.')}@mmbank`
+    ? `${nameParam.toLowerCase().replace(/\s+/g, '.')}@mmbank`
     : user.upiId;
 
   const savingsAccount = accounts.find(acc => acc.type === 'Savings');
@@ -492,3 +492,5 @@ export default function DashboardPage() {
     </UserDashboardLayout>
   );
 }
+
+    
